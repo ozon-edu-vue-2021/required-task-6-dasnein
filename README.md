@@ -1,3 +1,23 @@
+
+## Project setup
+```
+yarn install
+```
+
+### Compiles and hot-reloads for development
+```
+yarn serve
+```
+
+### Compiles and minifies for production
+```
+yarn build
+```
+
+### Lints and fixes files
+```
+yarn lint
+```
 # Домашнее задание в воркшопу 6
 Код, который показывал на воркшопе - https://github.com/ozon-edu-vue-2021/workshop6
 
