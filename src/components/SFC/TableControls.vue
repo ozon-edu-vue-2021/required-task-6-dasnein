@@ -26,6 +26,7 @@
         </div>
       </div>
     </div>
+
     <div class="row mt-4 border-top pt-4">
       <div class="col-6">
         <select v-model="sortingField" class="form-select">
@@ -60,6 +61,21 @@
         </div>
       </div>
     </div>
+
+    <form class="row g-3 border-top mt-4 pt-4" @submit.prevent="onFilterSubmit">
+      <div class="col-auto">
+        <label>Filter Title field:</label>
+      </div>
+      <div class="col-auto">
+        <input v-model="filter" type="text" class="form-control" />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Apply filter</button>
+        <button type="button" class="btn btn-warning mb-3 mx-3" @click="resetFilter">
+          Reset filter
+        </button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -77,6 +93,12 @@ export default {
     sort: {
       type: String,
     },
+  },
+
+  data() {
+    return {
+      filter: "",
+    };
   },
 
   computed: {
@@ -103,6 +125,16 @@ export default {
       set(v) {
         this.$emit("set-sort", v);
       },
+    },
+  },
+
+  methods: {
+    onFilterSubmit() {
+      this.$emit("set-filter", this.filter);
+    },
+    resetFilter() {
+      this.filter = "";
+      this.onFilterSubmit();
     },
   },
 };

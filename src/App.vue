@@ -9,6 +9,7 @@
         @set-pagination="setPagination"
         @set-order="setOrder"
         @set-sort="setSort"
+        @set-filter="setFilter"
       />
 
       <Table :items="items" />
@@ -59,6 +60,7 @@ export default {
       page: 0,
       sort: null,
       order: "asc",
+      filter: "",
 
       paginationTable: true,
     };
@@ -101,6 +103,8 @@ export default {
         queryParams.append("_sort", this.sort);
         queryParams.append("_order", this.order);
       }
+
+      queryParams.append("q", this.filter);
 
       const url = `${API_URL}?${queryParams.toString()}`;
 
@@ -146,6 +150,10 @@ export default {
     },
     setSort(val) {
       this.sort = val;
+      this.resetTable();
+    },
+    setFilter(val) {
+      this.filter = val;
       this.resetTable();
     },
     resetTable() {
