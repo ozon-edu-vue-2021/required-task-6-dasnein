@@ -2,7 +2,14 @@
   <div id="app" class="container my-5">
     <ErrorBlock v-if="error" />
     <template v-else>
-      <TableControls :pagination="paginationTable" @set-pagination="setPagination" />
+      <TableControls
+        :pagination="paginationTable"
+        :order="order"
+        :sort="sort"
+        @set-pagination="setPagination"
+        @set-order="setOrder"
+        @set-sort="setSort"
+      />
 
       <Table :items="items" />
       <TablePagination
@@ -50,6 +57,8 @@ export default {
 
       limit: 10,
       page: 0,
+      sort: null,
+      order: "asc",
 
       paginationTable: true,
     };
@@ -88,6 +97,11 @@ export default {
       queryParams.append("_limit", limit);
       queryParams.append("_page", page);
 
+      if (this.sort) {
+        queryParams.append("_sort", this.sort);
+        queryParams.append("_order", this.order);
+      }
+
       const url = `${API_URL}?${queryParams.toString()}`;
 
       this.loading = true;
@@ -124,6 +138,17 @@ export default {
     },
     setPagination(val) {
       this.paginationTable = val;
+      this.resetTable();
+    },
+    setOrder(val) {
+      this.order = val;
+      this.resetTable();
+    },
+    setSort(val) {
+      this.sort = val;
+      this.resetTable();
+    },
+    resetTable() {
       this.page = 0;
       this.items = [];
       this.init();
